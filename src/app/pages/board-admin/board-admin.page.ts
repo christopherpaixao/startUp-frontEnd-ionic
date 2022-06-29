@@ -1,0 +1,22 @@
+import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
+
+@Component({
+  selector: 'app-board-admin',
+  templateUrl: './board-admin.page.html',
+  styleUrls: ['./board-admin.page.scss'],
+})
+export class BoardAdminPage implements OnInit {
+  content?: string;
+  constructor(private userService: UserService) {}
+  ngOnInit(): void {
+    this.userService.getAdminBoard().subscribe({
+      next: (data) => {
+        this.content = data;
+      },
+      error: (err) => {
+        this.content = JSON.parse(err.error).message;
+      },
+    });
+  }
+}
